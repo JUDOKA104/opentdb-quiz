@@ -7,7 +7,7 @@ interface HighScore {
     date: string;
 }
 
-export const ResultPage = () => {
+export const ScorePage = () => {
     const navigate = useNavigate();
     const { score, resetQuiz } = useQuiz();
     const [history, setHistory] = useState<HighScore[]>([]);
