@@ -16,25 +16,24 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
 // Sauvegarder un score
-export const saveScore = async (pseudo: string, score: number) => {
+export const saveScore = async (pseudo: string, score: number, difficulty: string) => {
     try {
-        const docRef = await addDoc(collection(db, "leaderboard"), {
-            pseudo: pseudo,
-            score: score,
-            date: new Date()
+        await addDoc(collection(db, "leaderboard"), {
+            pseudo,
+            score,
+            difficulty,
+            date: new Date().toISOString()
         });
-        console.log("Score sauvegardé avec l'ID: ", docRef.id);
-    } catch (e) {
-        console.error("Erreur lors de l'ajout du score: ", e);
+        console.log("Score sauvegardé avec succès !");
+    } catch (error) {
+        console.error("Erreur lors de la sauvegarde du score :", error);
     }
 };
 
 // Récupérer le Top 10
 export const getTop10Scores = async () => {
     try {
-        const scoresRef = collection(db, "leaderboard");
-        const q = query(scoresRef, orderBy("score", "desc"), limit(10));
-
+        const q = query(collection(db, "leaderboard"), orderBy("score", "desc"), limit(10));
         const querySnapshot = await getDocs(q);
         const topScores: any[] = [];
 
@@ -43,8 +42,8 @@ export const getTop10Scores = async () => {
         });
 
         return topScores;
-    } catch (e) {
-        console.error("Erreur lors de la récupération des scores: ", e);
+    } catch (error) {
+        console.error("Erreur lors de la récupération du Leaderboard :", error);
         return [];
     }
 };
