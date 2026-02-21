@@ -7,6 +7,7 @@ export interface Question {
     question: string;
     correct_answer: string;
     incorrect_answers: string[];
+    all_answers: string[]; // Réponses mélangées
 }
 
 export interface QuizState {
@@ -15,4 +16,8 @@ export interface QuizState {
     questions: Question[];
     categoryId: string;
     difficulty: Difficulty;
+    isLoading: boolean;
+    isGameOver: boolean;
+    timeLeft: number;
+    error: string | null;
 }
