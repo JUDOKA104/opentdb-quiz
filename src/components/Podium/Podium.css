@@ -1,0 +1,53 @@
+.podium-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 10px;
+    margin: 3rem 0;
+    height: 160px;
+}
+
+.podium-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    animation: slideUp 0.8s ease-out forwards;
+}
+
+.podium-pseudo {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.podium-score {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.podium-block {
+    width: 100%;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: 800;
+    color: rgba(0,0,0,0.5);
+    box-shadow: inset 0 2px 5px rgba(255,255,255,0.3);
+}
+
+.podium-1 .podium-block { height: 120px; background: var(--gold); }
+.podium-2 .podium-block { height: 90px; background: var(--silver); }
+.podium-3 .podium-block { height: 60px; background: var(--bronze); }
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
