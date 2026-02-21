@@ -13,33 +13,38 @@ export const QuizPage = () => {
         isGameOver
     } = useQuiz();
 
-    // Redirection automatique si le jeu est fini
+    // --- LOGIQUE DE REDIRECTION ---
     useEffect(() => {
         if (isGameOver) {
-            navigate("/resultats"); // Ou une autre page de fin
+            // On attend que l'état isGameOver soit vrai pour changer de page
+            navigate("/score");
         }
     }, [isGameOver, navigate]);
 
-    // Sécurité : si on arrive sur la page sans questions (refresh par ex)
-    if (questions.length === 0) {
+    // Sécurité si on actualise la page (données perdues)
+    if (questions.length === 0 && !isGameOver) {
         return (
-            <div className="flex flex-col items-center p-10">
-                <p>Aucune question chargée...</p>
-                <button onClick={() => navigate("/")} className="mt-4 bg-blue-500 text-white p-2 rounded">
+            <div className="flex flex-col items-center mt-20">
+                <p className="mb-4 text-gray-600">Aucune question trouvée...</p>
+                <button
+                    onClick={() => navigate("/")}
+                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                >
                     Retour à l'accueil
                 </button>
             </div>
         );
     }
 
+    // On récupère la question actuelle via l'index du contexte
     const currentQuestion = questions[currentQuestionIndex];
 
     return (
         <main className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-xl mt-10">
-            {/* Header : Score et Timer */}
+            {/* Header : Infos de progression */}
             <div className="flex justify-between items-center mb-6">
-                <span className="font-bold text-gray-600">
-                    Question {currentQuestionIndex + 1} / {questions.length}
+                <span className="text-sm font-medium text-gray-500">
+                    Question {currentQuestionIndex + 1} sur {questions.length}
                 </span>
                 <div className={`text-xl font-mono font-bold ${timeLeft <= 3 ? 'text-red-500 animate-pulse' : 'text-blue-600'}`}>
                     ⏱ {timeLeft}s
@@ -47,26 +52,26 @@ export const QuizPage = () => {
                 <span className="font-bold text-green-600">Score: {score}</span>
             </div>
 
-            {/* Barre de progression visuelle */}
-            <div className="w-full bg-gray-200 h-2 rounded-full mb-8">
+            {/* Barre de temps visuelle */}
+            <div className="w-full bg-gray-100 h-2 rounded-full mb-8 overflow-hidden">
                 <div
-                    className="bg-blue-500 h-2 rounded-full transition-all duration-1000 ease-linear"
+                    className="bg-blue-500 h-full transition-all duration-1000 ease-linear"
                     style={{ width: `${(timeLeft / 10) * 100}%` }}
                 ></div>
             </div>
 
-            {/* La Question */}
-            <h2 className="text-xl font-semibold mb-8 text-center">
-                {currentQuestion.question}
+            {/* Enoncé de la question */}
+            <h2 className="text-xl font-semibold mb-8 text-center text-gray-800">
+                {currentQuestion?.question}
             </h2>
 
-            {/* Les Réponses (all_answers vient de ton formateur dans le Context) */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {currentQuestion.all_answers.map((answer, index) => (
+            {/* Grille des réponses */}
+            <div className="grid grid-cols-1 gap-4">
+                {currentQuestion?.all_answers.map((answer, index) => (
                     <button
                         key={index}
                         onClick={() => answerQuestion(answer)}
-                        className="p-4 border-2 border-blue-100 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors text-left font-medium"
+                        className="p-4 border-2 border-gray-100 rounded-xl hover:border-blue-400 hover:bg-blue-50 transition-all text-left font-medium text-gray-700"
                     >
                         {answer}
                     </button>
