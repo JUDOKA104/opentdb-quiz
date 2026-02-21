@@ -1,68 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;800&display=swap');
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --bg-dark: #070414; /* Nuit profonde */
+  --bg-panel: rgba(23, 15, 46, 0.65); /* Verre teinté violet profond */
+  --border: rgba(139, 92, 246, 0.25); /* Bordure violet néon subtil */
+  --primary: #8b5cf6;
+  --primary-glow: rgba(139, 92, 246, 0.6);
+  --accent: #0ea5e9;
+  --text-main: #f8fafc;
+  --text-muted: #a78bfa; /* Violet clair pour adoucir au lieu du gris */
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+  --gold: #fbbf24; --silver: #cbd5e1; --bronze: #b45309;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  font-family: 'Outfit', sans-serif;
+  background-color: var(--bg-dark);
+  background-image:
+          radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.15), transparent 30%),
+          radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.15), transparent 30%);
+  color: var(--text-main);
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+#root { max-width: 900px; margin: 0 auto; padding: 1rem; }
+
+/* --- NAVBAR (Fini le gris !) --- */
+.glass-nav {
+  display: flex; justify-content: space-between; align-items: center;
+  background: linear-gradient(135deg, rgba(23, 15, 46, 0.8), rgba(9, 6, 22, 0.8));
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  padding: 1rem 2rem; border-radius: 100px; margin-bottom: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.nav-logo { font-size: 1.4rem; font-weight: 800; background: linear-gradient(to right, #c4b5fd, var(--accent)); -webkit-background-clip: text; color: transparent; letter-spacing: 0.5px;}
+.nav-links { display: flex; gap: 1.5rem; }
+.nav-link { color: #8b5cf6; text-decoration: none; font-weight: 600; transition: 0.3s; opacity: 0.7; }
+.nav-link:hover { opacity: 1; }
+.nav-link.active { color: white; opacity: 1; text-shadow: 0 0 10px var(--primary-glow); }
+
+/* --- PANELS --- */
+.glass-panel {
+  background: var(--bg-panel); backdrop-filter: blur(24px);
+  border: 1px solid var(--border); border-radius: 24px; padding: 3rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+/* --- BOUTONS & INPUTS (Teinté violet) --- */
+.input-text, .select-box {
+  width: 100%; padding: 16px; border-radius: 12px;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  background: rgba(139, 92, 246, 0.05); /* Fini le fond noir/gris, on met un voile violet */
+  color: white; font-family: inherit; font-size: 1.1rem;
+  margin-top: 8px; outline: none; transition: 0.3s; box-sizing: border-box;
 }
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
+.input-text:focus, .select-box:focus { border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); background: rgba(139, 92, 246, 0.1); }
+.select-box option { background: var(--bg-dark); color: white; } /* Fix pour le menu déroulant natif */
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), #6d28d9);
+  color: white; border: none; padding: 16px 32px; border-radius: 12px;
+  font-size: 1.1rem; font-weight: 800; cursor: pointer; transition: 0.3s; width: 100%;
+  box-shadow: 0 8px 25px -5px var(--primary-glow); letter-spacing: 1px;
 }
+.btn-primary:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 15px 35px -5px var(--primary-glow); filter: brightness(1.2); }
+.btn-primary:active:not(:disabled) { transform: translateY(0); }
+.btn-primary:disabled { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); cursor: not-allowed; box-shadow: none; border: 1px solid rgba(255,255,255,0.1); }
+
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- ÉTATS DE CHARGEMENT ET LEADERBOARD --- */
+.spinner-container { display: flex; flex-direction: column; align-items: center; padding: 4rem 0; color: var(--text-muted); }
+.spinner { width: 40px; height: 40px; border: 4px solid rgba(139, 92, 246, 0.2); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.empty-state { text-align: center; padding: 4rem 2rem; background: rgba(139, 92, 246, 0.05); border: 1px dashed var(--border); border-radius: 16px; color: var(--text-muted); }
+.empty-state-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.7; filter: hue-rotate(250deg); }
+
+.leaderboard-table { background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border); border-radius: 16px; margin-top: 2rem; overflow: hidden; }
+.leaderboard-row { display: flex; padding: 16px 20px; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); transition: 0.2s ease; }
+.leaderboard-row:last-child { border-bottom: none; }
+.leaderboard-row:hover { background: rgba(139, 92, 246, 0.1); }
+.badge-score { font-weight: 800; color: white; background: rgba(139, 92, 246, 0.3); padding: 6px 14px; border-radius: 20px; font-size: 0.9rem; border: 1px solid var(--primary); box-shadow: 0 0 10px var(--primary-glow); }

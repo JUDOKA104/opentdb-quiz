@@ -20,4 +20,6 @@ export interface QuizState {
     isGameOver: boolean;
     timeLeft: number;
     error: string | null;
+    pseudo: string;
+    totalTime: number;
 }
